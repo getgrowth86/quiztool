@@ -17,6 +17,8 @@ export default function YesNo({ value, onChange, onSubmit }: Props) {
     return () => window.removeEventListener('keydown', handler);
   }, [onChange, onSubmit]);
 
+  const labels: Record<string, string> = { Yes: 'Ja', No: 'Nein' };
+
   return (
     <div className="flex gap-4">
       {['Yes', 'No'].map(opt => {
@@ -35,7 +37,7 @@ export default function YesNo({ value, onChange, onSubmit }: Props) {
             }`}
           >
             <span className="text-2xl">{isYes ? '👍' : '👎'}</span>
-            <span>{opt}</span>
+            <span>{labels[opt]}</span>
             <span className="text-xs text-gray-400 ml-1">{isYes ? 'Y' : 'N'}</span>
           </button>
         );

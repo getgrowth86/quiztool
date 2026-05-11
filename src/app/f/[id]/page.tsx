@@ -8,7 +8,7 @@ type Props = { params: Promise<{ id: string }> };
 
 export default async function PublicFormPage({ params }: Props) {
   const { id } = await params;
-  const form = getForm(id);
+  const form = await getForm(id);
 
   if (!form) notFound();
   if (!form.published) {

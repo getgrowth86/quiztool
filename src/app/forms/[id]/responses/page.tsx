@@ -25,10 +25,10 @@ function formatValue(question: Question, value: string): string {
 
 export default async function ResponsesPage({ params }: Props) {
   const { id } = await params;
-  const form = getForm(id);
+  const form = await getForm(id);
   if (!form) notFound();
 
-  const responses: Response[] = listResponses(id);
+  const responses: Response[] = await listResponses(id);
   const questions = form.questions ?? [];
 
   const total = responses.length;

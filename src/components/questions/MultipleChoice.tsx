@@ -53,7 +53,7 @@ export default function MultipleChoice({ value, onChange, options }: Props) {
           </button>
         );
       })}
-      <p className="text-sm text-gray-400 mt-2">Select all that apply, then press <kbd className="bg-white/10 px-1.5 py-0.5 rounded text-xs">Enter ↵</kbd></p>
+      <p className="text-sm text-gray-400 mt-2">Alle zutreffenden auswählen, dann <kbd className="bg-white/10 px-1.5 py-0.5 rounded text-xs">Enter ↵</kbd> drücken</p>
     </div>
   );
 }

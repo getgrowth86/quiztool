@@ -18,7 +18,7 @@ const CreateFormSchema = z.object({
 
 export async function GET() {
   try {
-    const forms = listForms();
+    const forms = await listForms();
     return NextResponse.json(forms);
   } catch (err) {
     console.error('GET /api/forms error:', err);
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
     }
-    const form = createForm(parsed.data);
+    const form = await createForm(parsed.data);
     return NextResponse.json(form, { status: 201 });
   } catch (err) {
     console.error('POST /api/forms error:', err);

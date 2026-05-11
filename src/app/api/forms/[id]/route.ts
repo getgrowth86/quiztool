@@ -33,7 +33,7 @@ type Params = { params: Promise<{ id: string }> };
 export async function GET(_req: NextRequest, { params }: Params) {
   try {
     const { id } = await params;
-    const form = getForm(id);
+    const form = await getForm(id);
     if (!form) return NextResponse.json({ error: 'Form not found' }, { status: 404 });
     return NextResponse.json(form);
   } catch (err) {
@@ -50,7 +50,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
     if (!parsed.success) {
       return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
     }
-    const form = updateForm(id, parsed.data);
+    const form = await updateForm(id, parsed.data);
     if (!form) return NextResponse.json({ error: 'Form not found' }, { status: 404 });
     return NextResponse.json(form);
   } catch (err) {
@@ -62,7 +62,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
 export async function DELETE(_req: NextRequest, { params }: Params) {
   try {
     const { id } = await params;
-    const ok = deleteForm(id);
+    const ok = await deleteForm(id);
     if (!ok) return NextResponse.json({ error: 'Form not found' }, { status: 404 });
     return NextResponse.json({ success: true });
   } catch (err) {

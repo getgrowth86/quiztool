@@ -53,8 +53,8 @@ function FormCard({ form }: { form: Form }) {
   );
 }
 
-export default function Home() {
-  const forms: Form[] = listForms();
+export default async function Home() {
+  const forms: Form[] = await listForms();
 
   return (
     <div className="min-h-screen bg-gray-50">
