@@ -1,4 +1,13 @@
-import { sql } from '@vercel/postgres';
+import { neon } from '@neondatabase/serverless';
+
+const connectionString =
+  process.env.quiztool_DATABASE_URL ??
+  process.env.DATABASE_URL ??
+  process.env.POSTGRES_URL;
+
+if (!connectionString) throw new Error('No database connection string found. Set quiztool_DATABASE_URL.');
+
+const sql = neon(connectionString, { fullResults: true });
 import { Form, Question, Response, Answer } from './types';
 
 export function generateId(): string {
