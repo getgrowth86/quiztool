@@ -5,11 +5,18 @@ interface Props {
   value: string;
   onChange: (v: string) => void;
   options: string[];
+  onSubmit?: () => void;
 }
 
 const KEYS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
-export default function MultipleChoice({ value, onChange, options }: Props) {
+const CheckIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 8L6.5 11.5L13 4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export default function MultipleChoice({ value, onChange, options, onSubmit }: Props) {
   const selected: string[] = value ? JSON.parse(value) : [];
 
   const toggle = (opt: string) => {
@@ -38,22 +45,27 @@ export default function MultipleChoice({ value, onChange, options }: Props) {
           <button
             key={opt}
             onClick={() => toggle(opt)}
-            className={`flex items-center gap-4 text-left px-5 py-4 rounded-xl border-2 transition-all duration-200 text-lg group hover:border-purple-400 ${
+            className={`flex items-center gap-4 text-left px-5 py-4 rounded-xl border-2 transition-all duration-200 text-lg group ${
               isSelected
-                ? 'border-purple-500 bg-purple-500/20 text-white'
-                : 'border-white/20 bg-white/5 text-gray-200 hover:bg-white/10'
+                ? 'border-[#111827] bg-gray-50 text-[#111827]'
+                : 'border-gray-200 bg-white text-[#374151] hover:border-gray-400'
             }`}
           >
             <span className={`flex-shrink-0 w-8 h-8 rounded-md border-2 flex items-center justify-center text-sm font-bold transition-colors ${
-              isSelected ? 'border-purple-400 bg-purple-500 text-white' : 'border-white/30 text-gray-400 group-hover:border-purple-400'
+              isSelected
+                ? 'border-[#111827] bg-[#111827] text-white'
+                : 'border-gray-300 text-gray-500 group-hover:border-gray-400'
             }`}>
-              {isSelected ? '✓' : KEYS[i]}
+              {isSelected ? <CheckIcon /> : KEYS[i]}
             </span>
             <span>{opt}</span>
           </button>
         );
       })}
-      <p className="text-sm text-gray-400 mt-2">Alle zutreffenden auswählen, dann <kbd className="bg-white/10 px-1.5 py-0.5 rounded text-xs">Enter ↵</kbd> drücken</p>
+      <p className="text-sm text-gray-500 mt-2">
+        Alle zutreffenden auswählen, dann{' '}
+        <kbd className="bg-gray-100 border border-gray-300 px-1.5 py-0.5 rounded text-xs text-gray-600">Enter ↵</kbd> drücken
+      </p>
     </div>
   );
 }

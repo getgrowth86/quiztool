@@ -38,6 +38,9 @@ export default function FormBuilder({ form, onSave }: Props) {
   const [tyTitle, setTyTitle] = useState(form?.thank_you_screen?.title ?? 'Vielen Dank!');
   const [tyDesc, setTyDesc] = useState(form?.thank_you_screen?.description ?? 'Deine Antwort wurde gespeichert.');
   const [published, setPublished] = useState(form?.published ?? false);
+  const [logoUrl, setLogoUrl] = useState(form?.logo_url ?? '');
+  const [brandColor, setBrandColor] = useState(form?.brand_color ?? '#111827');
+  const [metaPixelId, setMetaPixelId] = useState(form?.meta_pixel_id ?? '');
 
   const [questions, setQuestions] = useState<EditableQuestion[]>(
     (form?.questions ?? []).map(q => ({ ...q, tempId: q.id }))
@@ -101,6 +104,8 @@ export default function FormBuilder({ form, onSave }: Props) {
 
   const handleSave = async () => {
     if (!title.trim()) { setError('Formulartitel ist erforderlich'); return; }
+    const badOptions = questions.find(q => (q.type === 'single_choice' || q.type === 'multiple_choice') && (q.options ?? []).length < 2);
+    if (badOptions) { setError(`Frage "${badOptions.title}" benötigt mindestens 2 Optionen.`); return; }
     setSaving(true);
     setError('');
 
@@ -110,6 +115,9 @@ export default function FormBuilder({ form, onSave }: Props) {
       published,
       welcome_screen: welcomeTitle ? { title: welcomeTitle, description: welcomeDesc, button_text: welcomeBtn } : null,
       thank_you_screen: { title: tyTitle, description: tyDesc },
+      logo_url: logoUrl || null,
+      brand_color: brandColor || null,
+      meta_pixel_id: metaPixelId || null,
       questions: questions.map((q, i) => ({
         id: q.id,
         type: q.type,
@@ -257,6 +265,48 @@ export default function FormBuilder({ form, onSave }: Props) {
                 <div className="flex flex-col gap-2">
                   <input value={tyTitle} onChange={e => setTyTitle(e.target.value)} placeholder="Dankestitel" className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-purple-500" />
                   <textarea value={tyDesc} onChange={e => setTyDesc(e.target.value)} placeholder="Dankestext" rows={2} className="border rounded-lg px-3 py-2 text-sm w-full resize-none focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Branding & Tracking</h3>
+                <div className="flex flex-col gap-3">
+                  <div>
+                    <label className="text-xs text-gray-600 mb-1 block font-medium">Logo-URL</label>
+                    <input
+                      value={logoUrl}
+                      onChange={e => setLogoUrl(e.target.value)}
+                      placeholder="https://example.com/logo.png"
+                      className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                    <p className="text-xs text-gray-400 mt-1">Direkte URL zu deinem Logo (PNG, SVG)</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-600 mb-1 block font-medium">Brandfarbe</label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="color"
+                        value={brandColor}
+                        onChange={e => setBrandColor(e.target.value)}
+                        className="w-9 h-9 rounded border border-gray-200 cursor-pointer p-0.5"
+                      />
+                      <input
+                        value={brandColor}
+                        onChange={e => setBrandColor(e.target.value)}
+                        placeholder="#111827"
+                        className="border rounded-lg px-3 py-2 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-600 mb-1 block font-medium">Meta Pixel ID</label>
+                    <input
+                      value={metaPixelId}
+                      onChange={e => setMetaPixelId(e.target.value)}
+                      placeholder="123456789012345"
+                      className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                    <p className="text-xs text-gray-400 mt-1">Deine Facebook/Meta Pixel ID für Conversion-Tracking</p>
+                  </div>
                 </div>
               </div>
               {form && (

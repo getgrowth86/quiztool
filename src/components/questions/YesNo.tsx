@@ -28,17 +28,14 @@ export default function YesNo({ value, onChange, onSubmit }: Props) {
           <button
             key={opt}
             onClick={() => { onChange(opt); setTimeout(onSubmit, 300); }}
-            className={`flex items-center gap-3 px-8 py-5 rounded-xl border-2 transition-all duration-200 text-xl font-medium hover:scale-105 ${
+            className={`flex items-center gap-3 px-8 py-5 rounded-xl border-2 transition-all duration-200 text-xl font-medium ${
               selected
-                ? isYes
-                  ? 'border-green-500 bg-green-500/20 text-green-300'
-                  : 'border-red-500 bg-red-500/20 text-red-300'
-                : 'border-white/20 bg-white/5 text-gray-200 hover:border-white/40'
+                ? 'border-[#111827] bg-[#111827] text-white'
+                : 'border-gray-200 bg-white text-[#374151] hover:border-[#111827]'
             }`}
           >
-            <span className="text-2xl">{isYes ? '👍' : '👎'}</span>
             <span>{labels[opt]}</span>
-            <span className="text-xs text-gray-400 ml-1">{isYes ? 'Y' : 'N'}</span>
+            <span className={`text-xs ml-1 ${selected ? 'text-gray-300' : 'text-gray-400'}`}>{isYes ? 'Y' : 'N'}</span>
           </button>
         );
       })}

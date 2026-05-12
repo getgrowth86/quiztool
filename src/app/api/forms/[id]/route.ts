@@ -26,6 +26,9 @@ const UpdateFormSchema = z.object({
     description: z.string(),
   }).nullable().optional(),
   questions: z.array(QuestionSchema).optional(),
+  meta_pixel_id: z.string().optional().nullable(),
+  logo_url: z.string().optional().nullable(),
+  brand_color: z.string().optional().nullable(),
 });
 
 type Params = { params: Promise<{ id: string }> };

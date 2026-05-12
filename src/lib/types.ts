@@ -29,6 +29,9 @@ export interface Form {
   created_at: string;
   updated_at: string;
   questions?: Question[];
+  meta_pixel_id?: string | null;
+  logo_url?: string | null;
+  brand_color?: string | null;
 }
 
 export interface WelcomeScreen {

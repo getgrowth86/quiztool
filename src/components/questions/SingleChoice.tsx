@@ -32,14 +32,14 @@ export default function SingleChoice({ value, onChange, onSubmit, options }: Pro
           <button
             key={opt}
             onClick={() => { onChange(opt); setTimeout(onSubmit, 300); }}
-            className={`flex items-center gap-4 text-left px-5 py-4 rounded-xl border-2 transition-all duration-200 text-lg group hover:border-purple-400 ${
+            className={`flex items-center gap-4 text-left px-5 py-4 rounded-xl border-2 transition-all duration-200 text-lg group hover:border-[#111827] ${
               selected
-                ? 'border-purple-500 bg-purple-500/20 text-white'
-                : 'border-white/20 bg-white/5 text-gray-200 hover:bg-white/10'
+                ? 'border-[#111827] bg-[#111827]/5 text-[#111827]'
+                : 'border-gray-200 bg-white text-[#374151] hover:bg-gray-50'
             }`}
           >
             <span className={`flex-shrink-0 w-8 h-8 rounded-md border-2 flex items-center justify-center text-sm font-bold transition-colors ${
-              selected ? 'border-purple-400 bg-purple-500 text-white' : 'border-white/30 text-gray-400 group-hover:border-purple-400'
+              selected ? 'border-[#111827] bg-[#111827] text-white' : 'border-gray-300 text-gray-500 group-hover:border-[#111827]'
             }`}>
               {KEYS[i]}
             </span>

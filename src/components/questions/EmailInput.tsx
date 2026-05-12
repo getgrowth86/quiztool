@@ -19,7 +19,7 @@ export default function EmailInput({ value, onChange, onSubmit }: Props) {
       onChange={e => onChange(e.target.value)}
       onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); onSubmit(); } }}
       placeholder="name@example.com"
-      className="w-full bg-transparent border-b-2 border-purple-400/50 focus:border-purple-400 outline-none text-2xl md:text-3xl py-3 placeholder:text-gray-400 transition-colors"
+      className="w-full bg-transparent border-b-2 border-gray-300 focus:border-[#111827] outline-none text-2xl md:text-3xl py-3 text-[#111827] placeholder:text-[#9CA3AF] transition-colors"
     />
   );
 }

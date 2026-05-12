@@ -25,9 +25,9 @@ export default function LongText({ value, onChange, onSubmit }: Props) {
         }}
         placeholder="Antwort hier eingeben..."
         rows={4}
-        className="w-full bg-transparent border-b-2 border-purple-400/50 focus:border-purple-400 outline-none text-xl md:text-2xl py-3 placeholder:text-gray-400 resize-none transition-colors"
+        className="w-full bg-transparent border-b-2 border-gray-300 focus:border-[#111827] outline-none text-xl md:text-2xl py-3 text-[#111827] placeholder:text-[#9CA3AF] resize-none transition-colors"
       />
-      <p className="text-sm text-gray-400 mt-2">Drücke <kbd className="bg-white/10 px-1.5 py-0.5 rounded text-xs">Cmd+Enter</kbd> zum Weiter</p>
+      <p className="text-sm text-gray-500 mt-2">Drücke <kbd className="bg-gray-100 border border-gray-300 px-1.5 py-0.5 rounded text-xs text-gray-600">Cmd+Enter</kbd> zum Weiter</p>
     </div>
   );
 }

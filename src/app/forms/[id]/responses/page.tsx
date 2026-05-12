@@ -52,7 +52,7 @@ export default async function ResponsesPage({ params }: Props) {
             <h1 className="font-semibold text-gray-900 truncate">{form.title}</h1>
             <p className="text-xs text-gray-500">Antworten</p>
           </div>
-          <Link href={`/forms/${id}/edit`} className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+          <Link href={`/forms/${id}/edit`} className="text-sm text-[#2563EB] hover:text-blue-800 font-medium">
             Formular bearbeiten
           </Link>
         </div>
@@ -64,9 +64,9 @@ export default async function ResponsesPage({ params }: Props) {
           {[
             { label: 'Antworten gesamt', value: total, color: 'text-gray-900' },
             { label: 'Abgeschlossen', value: completed, color: 'text-green-600' },
-            { label: 'Abschlussrate', value: `${completionRate}%`, color: 'text-purple-600' },
+            { label: 'Abschlussrate', value: `${completionRate}%`, color: 'text-[#2563EB]' },
           ].map(stat => (
-            <div key={stat.label} className="bg-white rounded-xl border border-gray-200 p-5">
+            <div key={stat.label} className="bg-white rounded-lg border border-gray-200 p-5">
               <p className="text-sm text-gray-500 mb-1">{stat.label}</p>
               <p className={`text-3xl font-bold ${stat.color}`}>{stat.value}</p>
             </div>
@@ -74,8 +74,12 @@ export default async function ResponsesPage({ params }: Props) {
         </div>
 
         {responses.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-gray-200 p-16 text-center">
-            <div className="text-5xl mb-4">📭</div>
+          <div className="bg-white rounded-xl border border-gray-200 p-16 text-center">
+            <div className="w-12 h-12 rounded-xl border-2 border-gray-200 flex items-center justify-center mx-auto mb-5">
+              <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8.25V18a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 18V8.25m-18 0V6a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 6v2.25m-18 0h18" />
+              </svg>
+            </div>
             <h2 className="text-xl font-semibold text-gray-800 mb-2">Noch keine Antworten</h2>
             <p className="text-gray-500 mb-6">Teile dein Formular, um Antworten zu sammeln.</p>
             {form.published && (
@@ -83,9 +87,9 @@ export default async function ResponsesPage({ params }: Props) {
                 href={`/f/${id}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-purple-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-purple-700"
+                className="inline-flex items-center gap-2 bg-[#111827] hover:bg-[#1F2937] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors"
               >
-                View Form ↗
+                Formular öffnen ↗
               </a>
             )}
           </div>

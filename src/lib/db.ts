@@ -55,6 +55,10 @@ async function ensureInit() {
     )
   `;
 
+  await sql`ALTER TABLE forms ADD COLUMN IF NOT EXISTS meta_pixel_id TEXT`;
+  await sql`ALTER TABLE forms ADD COLUMN IF NOT EXISTS logo_url TEXT`;
+  await sql`ALTER TABLE forms ADD COLUMN IF NOT EXISTS brand_color TEXT`;
+
   // Seed example form if none exists
   const { rows } = await sql`SELECT COUNT(*) AS c FROM forms`;
   if (parseInt(rows[0].c) === 0) {
@@ -121,12 +125,15 @@ export async function createForm(data: {
   description?: string;
   welcome_screen?: object;
   thank_you_screen?: object;
+  meta_pixel_id?: string | null;
+  logo_url?: string | null;
+  brand_color?: string | null;
 }): Promise<Form> {
   await ensureInit();
   const now = new Date().toISOString();
   const id = generateId();
   await sql`
-    INSERT INTO forms (id, title, description, welcome_screen, thank_you_screen, published, created_at, updated_at)
+    INSERT INTO forms (id, title, description, welcome_screen, thank_you_screen, published, created_at, updated_at, meta_pixel_id, logo_url, brand_color)
     VALUES (
       ${id},
       ${data.title},
@@ -135,7 +142,10 @@ export async function createForm(data: {
       ${data.thank_you_screen ? JSON.stringify(data.thank_you_screen) : null},
       FALSE,
       ${now},
-      ${now}
+      ${now},
+      ${data.meta_pixel_id ?? null},
+      ${data.logo_url ?? null},
+      ${data.brand_color ?? null}
     )
   `;
   return (await getForm(id))!;
@@ -147,6 +157,9 @@ export async function updateForm(id: string, data: {
   welcome_screen?: object | null;
   thank_you_screen?: object | null;
   published?: boolean;
+  meta_pixel_id?: string | null;
+  logo_url?: string | null;
+  brand_color?: string | null;
   questions?: Array<{
     id?: string;
     type: string;
@@ -167,6 +180,9 @@ export async function updateForm(id: string, data: {
   if (data.welcome_screen !== undefined) await sql`UPDATE forms SET welcome_screen = ${data.welcome_screen ? JSON.stringify(data.welcome_screen) : null}, updated_at = ${now} WHERE id = ${id}`;
   if (data.thank_you_screen !== undefined) await sql`UPDATE forms SET thank_you_screen = ${data.thank_you_screen ? JSON.stringify(data.thank_you_screen) : null}, updated_at = ${now} WHERE id = ${id}`;
   if (data.published !== undefined) await sql`UPDATE forms SET published = ${data.published}, updated_at = ${now} WHERE id = ${id}`;
+  if (data.meta_pixel_id !== undefined) await sql`UPDATE forms SET meta_pixel_id = ${data.meta_pixel_id ?? null}, updated_at = ${now} WHERE id = ${id}`;
+  if (data.logo_url !== undefined) await sql`UPDATE forms SET logo_url = ${data.logo_url ?? null}, updated_at = ${now} WHERE id = ${id}`;
+  if (data.brand_color !== undefined) await sql`UPDATE forms SET brand_color = ${data.brand_color ?? null}, updated_at = ${now} WHERE id = ${id}`;
 
   // Always bump updated_at
   await sql`UPDATE forms SET updated_at = ${now} WHERE id = ${id}`;

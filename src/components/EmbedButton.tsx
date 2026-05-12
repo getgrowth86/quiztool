@@ -45,7 +45,7 @@ export default function EmbedButton({ formId }: Props) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="text-sm bg-blue-50 hover:bg-blue-100 text-blue-700 px-4 py-2 rounded-lg transition-colors font-medium"
+        className="text-sm bg-gray-50 hover:bg-gray-100 text-gray-600 px-4 py-2 rounded-lg transition-colors font-medium"
       >
         {'</>'}  Embed
       </button>
@@ -55,8 +55,8 @@ export default function EmbedButton({ formId }: Props) {
           className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
           onClick={e => { if (e.target === e.currentTarget) setOpen(false); }}
         >
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
+          <div className="bg-white rounded-xl shadow-lg border border-gray-200 w-full max-w-2xl overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
               <div>
                 <h2 className="text-lg font-bold text-gray-900">In Funnelcockpit einbetten</h2>
                 <p className="text-sm text-gray-500 mt-0.5">Kopiere den Code in ein HTML-Element in Funnelcockpit</p>
@@ -68,7 +68,7 @@ export default function EmbedButton({ formId }: Props) {
               {/* Step 1 */}
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="w-6 h-6 bg-purple-100 text-purple-700 rounded-full text-xs font-bold flex items-center justify-center">1</span>
+                  <span className="w-6 h-6 bg-gray-100 text-gray-700 rounded-full text-xs font-bold flex items-center justify-center">1</span>
                   <span className="text-sm font-semibold text-gray-700">Einfaches iFrame (feste Höhe)</span>
                 </div>
                 <div className="relative">
@@ -87,9 +87,9 @@ export default function EmbedButton({ formId }: Props) {
               {/* Step 2 */}
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="w-6 h-6 bg-purple-100 text-purple-700 rounded-full text-xs font-bold flex items-center justify-center">2</span>
+                  <span className="w-6 h-6 bg-gray-100 text-gray-700 rounded-full text-xs font-bold flex items-center justify-center">2</span>
                   <span className="text-sm font-semibold text-gray-700">Mit Auto-Resize (empfohlen)</span>
-                  <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Empfohlen</span>
+                  <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-medium">Empfohlen</span>
                 </div>
                 <div className="relative">
                   <pre className="bg-gray-900 text-green-300 text-xs p-4 rounded-xl overflow-x-auto font-mono leading-relaxed">
@@ -105,9 +105,9 @@ export default function EmbedButton({ formId }: Props) {
               </div>
 
               {/* Instructions */}
-              <div className="bg-blue-50 rounded-xl p-4 text-sm text-blue-800">
+              <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-gray-700">
                 <p className="font-semibold mb-2">So gehts in Funnelcockpit:</p>
-                <ol className="space-y-1 list-decimal list-inside text-blue-700">
+                <ol className="space-y-1 list-decimal list-inside text-gray-700">
                   <li>Öffne deine Funnel-Seite in Funnelcockpit</li>
                   <li>Füge ein <strong>HTML-Element</strong> / <strong>Custom Code Block</strong> ein</li>
                   <li>Füge den Code oben ein und speichere</li>
