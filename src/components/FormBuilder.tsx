@@ -255,16 +255,16 @@ export default function FormBuilder({ form, onSave }: Props) {
               <div>
                 <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Willkommensseite</h3>
                 <div className="flex flex-col gap-2">
-                  <input value={welcomeTitle} onChange={e => setWelcomeTitle(e.target.value)} placeholder="Begrüßungstitel" className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-purple-500" />
-                  <textarea value={welcomeDesc} onChange={e => setWelcomeDesc(e.target.value)} placeholder="Begrüßungstext" rows={2} className="border rounded-lg px-3 py-2 text-sm w-full resize-none focus:outline-none focus:ring-2 focus:ring-purple-500" />
-                  <input value={welcomeBtn} onChange={e => setWelcomeBtn(e.target.value)} placeholder="Schaltflächentext" className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                  <input value={welcomeTitle} onChange={e => setWelcomeTitle(e.target.value)} placeholder="Begrüßungstitel" className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400" />
+                  <textarea value={welcomeDesc} onChange={e => setWelcomeDesc(e.target.value)} placeholder="Begrüßungstext" rows={2} className="border rounded-lg px-3 py-2 text-sm w-full resize-none focus:outline-none focus:ring-2 focus:ring-gray-400" />
+                  <input value={welcomeBtn} onChange={e => setWelcomeBtn(e.target.value)} placeholder="Schaltflächentext" className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400" />
                 </div>
               </div>
               <div>
                 <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Dankesseite</h3>
                 <div className="flex flex-col gap-2">
-                  <input value={tyTitle} onChange={e => setTyTitle(e.target.value)} placeholder="Dankestitel" className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-purple-500" />
-                  <textarea value={tyDesc} onChange={e => setTyDesc(e.target.value)} placeholder="Dankestext" rows={2} className="border rounded-lg px-3 py-2 text-sm w-full resize-none focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                  <input value={tyTitle} onChange={e => setTyTitle(e.target.value)} placeholder="Dankestitel" className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400" />
+                  <textarea value={tyDesc} onChange={e => setTyDesc(e.target.value)} placeholder="Dankestext" rows={2} className="border rounded-lg px-3 py-2 text-sm w-full resize-none focus:outline-none focus:ring-2 focus:ring-gray-400" />
                 </div>
               </div>
               <div>
@@ -276,7 +276,7 @@ export default function FormBuilder({ form, onSave }: Props) {
                       value={logoUrl}
                       onChange={e => setLogoUrl(e.target.value)}
                       placeholder="https://example.com/logo.png"
-                      className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400"
                     />
                     <p className="text-xs text-gray-400 mt-1">Direkte URL zu deinem Logo (PNG, SVG)</p>
                   </div>
@@ -293,7 +293,7 @@ export default function FormBuilder({ form, onSave }: Props) {
                         value={brandColor}
                         onChange={e => setBrandColor(e.target.value)}
                         placeholder="#111827"
-                        className="border rounded-lg px-3 py-2 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono"
+                        className="border rounded-lg px-3 py-2 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-gray-400 font-mono"
                       />
                     </div>
                   </div>
@@ -303,7 +303,7 @@ export default function FormBuilder({ form, onSave }: Props) {
                       value={metaPixelId}
                       onChange={e => setMetaPixelId(e.target.value)}
                       placeholder="123456789012345"
-                      className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400"
                     />
                     <p className="text-xs text-gray-400 mt-1">Deine Facebook/Meta Pixel ID für Conversion-Tracking</p>
                   </div>
@@ -363,7 +363,7 @@ export default function FormBuilder({ form, onSave }: Props) {
                           options: (t === 'single_choice' || t === 'multiple_choice') ? (q.options && q.options.length ? q.options : ['Option 1', 'Option 2']) : null
                         });
                       }}
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white"
                     >
                       {QUESTION_TYPES.map(t => (
                         <option key={t.value} value={t.value}>{t.icon} {t.label}</option>
@@ -377,7 +377,7 @@ export default function FormBuilder({ form, onSave }: Props) {
                       value={q.title}
                       onChange={e => updateQuestion(activeQIndex, { title: e.target.value })}
                       placeholder="Deine Frage eingeben..."
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
                     />
                   </div>
 
@@ -387,7 +387,7 @@ export default function FormBuilder({ form, onSave }: Props) {
                       value={q.description ?? ''}
                       onChange={e => updateQuestion(activeQIndex, { description: e.target.value })}
                       placeholder="Beschreibung oder Hinweis hinzufügen..."
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
                     />
                   </div>
 
@@ -413,7 +413,7 @@ export default function FormBuilder({ form, onSave }: Props) {
                             <input
                               value={opt}
                               onChange={e => updateOption(activeQIndex, oIdx, e.target.value)}
-                              className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                              className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
                             />
                             <button onClick={() => removeOption(activeQIndex, oIdx)} className="text-red-400 hover:text-red-600 text-lg leading-none px-1">×</button>
                           </div>
