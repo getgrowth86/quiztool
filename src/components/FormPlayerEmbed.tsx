@@ -70,7 +70,7 @@ export default function FormPlayerEmbed({ form }: Props) {
   useEffect(() => {
     const sendHeight = () => {
       const height = document.documentElement.scrollHeight;
-      window.parent.postMessage({ type: 'formflow:resize', height }, '*');
+      window.parent.postMessage({ type: 'growthform:resize', height }, '*');
     };
     sendHeight();
     const ro = new ResizeObserver(sendHeight);
@@ -128,7 +128,7 @@ export default function FormPlayerEmbed({ form }: Props) {
         setDirection(1);
         setScreen('thankyou');
         // Notify parent that form was completed
-        window.parent.postMessage({ type: 'formflow:complete', formId: form.id }, '*');
+        window.parent.postMessage({ type: 'growthform:complete', formId: form.id }, '*');
       } catch {
         setError('Fehler beim Absenden. Bitte versuche es erneut.');
       } finally {
@@ -334,7 +334,7 @@ export default function FormPlayerEmbed({ form }: Props) {
       </div>
 
       <div className="py-3 text-center text-xs text-[#D1D5DB]">
-        Bereitgestellt von <span className="text-[#D1D5DB]">FormFlow</span>
+        Bereitgestellt von <span className="text-[#D1D5DB]">Growth-Form</span>
       </div>
     </div>
   );

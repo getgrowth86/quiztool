@@ -18,9 +18,9 @@ export default function EmbedButton({ formId }: Props) {
   allow="clipboard-write"
 ></iframe>`;
 
-  const autoResizeCode = `<!-- FormFlow Embed with Auto-Resize -->
+  const autoResizeCode = `<!-- Growth-Form Embed with Auto-Resize -->
 <iframe
-  id="formflow-${formId}"
+  id="growthform-${formId}"
   src="${origin}/embed/${formId}"
   style="width:100%;border:none;border-radius:12px;"
   height="600"
@@ -28,8 +28,8 @@ export default function EmbedButton({ formId }: Props) {
 ></iframe>
 <script>
   window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'formflow:resize') {
-      var iframe = document.getElementById('formflow-${formId}');
+    if (e.data && e.data.type === 'growthform:resize') {
+      var iframe = document.getElementById('growthform-${formId}');
       if (iframe) iframe.height = e.data.height + 'px';
     }
   });

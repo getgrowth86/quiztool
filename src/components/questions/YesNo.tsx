@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface Props {
   value: string;
@@ -8,14 +8,23 @@ interface Props {
 }
 
 export default function YesNo({ value, onChange, onSubmit }: Props) {
+  const prevValueRef = useRef(value);
+  useEffect(() => {
+    if (value && value !== prevValueRef.current) {
+      prevValueRef.current = value;
+      const timer = setTimeout(onSubmit, 280);
+      return () => clearTimeout(timer);
+    }
+  }, [value, onSubmit]);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'y' || e.key === 'Y') { onChange('Yes'); setTimeout(onSubmit, 300); }
-      if (e.key === 'n' || e.key === 'N') { onChange('No'); setTimeout(onSubmit, 300); }
+      if (e.key === 'y' || e.key === 'Y') onChange('Yes');
+      if (e.key === 'n' || e.key === 'N') onChange('No');
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [onChange, onSubmit]);
+  }, [onChange]);
 
   const labels: Record<string, string> = { Yes: 'Ja', No: 'Nein' };
 
@@ -27,7 +36,7 @@ export default function YesNo({ value, onChange, onSubmit }: Props) {
         return (
           <button
             key={opt}
-            onClick={() => { onChange(opt); setTimeout(onSubmit, 300); }}
+            onClick={() => onChange(opt)}
             className={`flex items-center gap-3 px-8 py-5 rounded-xl border-2 transition-all duration-200 text-xl font-medium ${
               selected
                 ? 'border-[#111827] bg-[#111827] text-white'

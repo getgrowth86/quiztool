@@ -425,7 +425,7 @@ export default function FormPlayer({ form }: Props) {
 
       {/* Branding footer */}
       <div className="py-4 text-center text-xs text-[#D1D5DB]">
-        Bereitgestellt von <span className="text-[#D1D5DB]">FormFlow</span>
+        Bereitgestellt von <span className="text-[#D1D5DB]">Growth-Form</span>
       </div>
     </div>
   );

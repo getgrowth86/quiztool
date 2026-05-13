@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface Props {
   value: string;
@@ -11,18 +11,26 @@ interface Props {
 const KEYS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
 export default function SingleChoice({ value, onChange, onSubmit, options }: Props) {
+  // Auto-advance when value changes (fixes stale-closure issue with setTimeout)
+  const prevValueRef = useRef(value);
+  useEffect(() => {
+    if (value && value !== prevValueRef.current) {
+      prevValueRef.current = value;
+      const timer = setTimeout(onSubmit, 280);
+      return () => clearTimeout(timer);
+    }
+  }, [value, onSubmit]);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const idx = KEYS.indexOf(e.key.toUpperCase());
       if (idx >= 0 && idx < options.length) {
-        const selected = options[idx];
-        onChange(selected);
-        setTimeout(onSubmit, 300);
+        onChange(options[idx]);
       }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [options, onChange, onSubmit]);
+  }, [options, onChange]);
 
   return (
     <div className="flex flex-col gap-3 w-full">
@@ -31,7 +39,7 @@ export default function SingleChoice({ value, onChange, onSubmit, options }: Pro
         return (
           <button
             key={opt}
-            onClick={() => { onChange(opt); setTimeout(onSubmit, 300); }}
+            onClick={() => onChange(opt)}
             className={`flex items-center gap-4 text-left px-5 py-4 rounded-xl border-2 transition-all duration-200 text-lg group hover:border-[#111827] ${
               selected
                 ? 'border-[#111827] bg-[#111827]/5 text-[#111827]'

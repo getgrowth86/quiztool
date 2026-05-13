@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FormFlow — Schöne Formulare, mühelos erstellt",
-  description: "Erstelle schöne, dialogorientierte Formulare mit FormFlow.",
+  title: "Growth-Form — Schöne Formulare, mühelos erstellt",
+  description: "Erstelle schöne, dialogorientierte Formulare mit Growth-Form.",
 };
 
 export default function RootLayout({
