@@ -4,16 +4,19 @@ import { z } from 'zod';
 
 const CreateFormSchema = z.object({
   title: z.string().min(1, 'Title is required'),
-  description: z.string().optional(),
+  description: z.string().nullable().optional(),
   welcome_screen: z.object({
     title: z.string(),
     description: z.string(),
     button_text: z.string(),
-  }).optional(),
+  }).nullable().optional(),
   thank_you_screen: z.object({
     title: z.string(),
     description: z.string(),
-  }).optional(),
+  }).nullable().optional(),
+  meta_pixel_id: z.string().nullable().optional(),
+  logo_url: z.string().nullable().optional(),
+  brand_color: z.string().nullable().optional(),
 });
 
 export async function GET() {

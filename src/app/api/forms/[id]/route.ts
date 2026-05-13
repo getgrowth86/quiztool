@@ -3,18 +3,18 @@ import { getForm, updateForm, deleteForm } from '@/lib/db';
 import { z } from 'zod';
 
 const QuestionSchema = z.object({
-  id: z.string().optional(),
+  id: z.string().nullable().optional(),
   type: z.enum(['short_text', 'long_text', 'multiple_choice', 'single_choice', 'rating', 'number', 'email', 'yes_no']),
   title: z.string().min(1),
-  description: z.string().optional(),
-  required: z.boolean().optional(),
+  description: z.string().nullable().optional(),
+  required: z.boolean().nullable().optional(),
   order_index: z.number(),
-  options: z.array(z.string()).optional(),
+  options: z.array(z.string()).nullable().optional(),
 });
 
 const UpdateFormSchema = z.object({
   title: z.string().min(1).optional(),
-  description: z.string().optional(),
+  description: z.string().nullable().optional(),
   published: z.boolean().optional(),
   welcome_screen: z.object({
     title: z.string(),

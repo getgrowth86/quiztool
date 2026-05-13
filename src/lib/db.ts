@@ -122,9 +122,9 @@ export async function getForm(id: string): Promise<Form | null> {
 
 export async function createForm(data: {
   title: string;
-  description?: string;
-  welcome_screen?: object;
-  thank_you_screen?: object;
+  description?: string | null;
+  welcome_screen?: object | null;
+  thank_you_screen?: object | null;
   meta_pixel_id?: string | null;
   logo_url?: string | null;
   brand_color?: string | null;
@@ -153,7 +153,7 @@ export async function createForm(data: {
 
 export async function updateForm(id: string, data: {
   title?: string;
-  description?: string;
+  description?: string | null;
   welcome_screen?: object | null;
   thank_you_screen?: object | null;
   published?: boolean;
@@ -161,13 +161,13 @@ export async function updateForm(id: string, data: {
   logo_url?: string | null;
   brand_color?: string | null;
   questions?: Array<{
-    id?: string;
+    id?: string | null;
     type: string;
     title: string;
-    description?: string;
-    required?: boolean;
+    description?: string | null;
+    required?: boolean | null;
     order_index: number;
-    options?: string[];
+    options?: string[] | null;
   }>;
 }): Promise<Form | null> {
   await ensureInit();
