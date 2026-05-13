@@ -41,6 +41,8 @@ export default function FormBuilder({ form, onSave }: Props) {
   const [logoUrl, setLogoUrl] = useState(form?.logo_url ?? '');
   const [brandColor, setBrandColor] = useState(form?.brand_color ?? '#111827');
   const [metaPixelId, setMetaPixelId] = useState(form?.meta_pixel_id ?? '');
+  const [welcomeSubtext, setWelcomeSubtext] = useState(form?.welcome_screen?.subtext ?? '');
+  const [welcomeTrustItems, setWelcomeTrustItems] = useState<string[]>(form?.welcome_screen?.trust_items ?? []);
 
   const [questions, setQuestions] = useState<EditableQuestion[]>(
     (form?.questions ?? []).map(q => ({ ...q, tempId: q.id }))
@@ -113,7 +115,13 @@ export default function FormBuilder({ form, onSave }: Props) {
       title,
       description,
       published,
-      welcome_screen: welcomeTitle ? { title: welcomeTitle, description: welcomeDesc, button_text: welcomeBtn } : null,
+      welcome_screen: welcomeTitle ? {
+        title: welcomeTitle,
+        description: welcomeDesc,
+        button_text: welcomeBtn,
+        subtext: welcomeSubtext || undefined,
+        trust_items: welcomeTrustItems.filter(t => t.trim()).length > 0 ? welcomeTrustItems.filter(t => t.trim()) : undefined,
+      } : null,
       thank_you_screen: { title: tyTitle, description: tyDesc },
       logo_url: logoUrl || null,
       brand_color: brandColor || null,
@@ -258,6 +266,44 @@ export default function FormBuilder({ form, onSave }: Props) {
                   <input value={welcomeTitle} onChange={e => setWelcomeTitle(e.target.value)} placeholder="Begrüßungstitel" className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400" />
                   <textarea value={welcomeDesc} onChange={e => setWelcomeDesc(e.target.value)} placeholder="Begrüßungstext" rows={2} className="border rounded-lg px-3 py-2 text-sm w-full resize-none focus:outline-none focus:ring-2 focus:ring-gray-400" />
                   <input value={welcomeBtn} onChange={e => setWelcomeBtn(e.target.value)} placeholder="Schaltflächentext" className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400" />
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">Text unter Button</label>
+                    <input
+                      value={welcomeSubtext}
+                      onChange={e => setWelcomeSubtext(e.target.value)}
+                      placeholder="z.B. Aktuell werden neue Bewerber geprüft"
+                      className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">Trust-Texte (mit Häkchen)</label>
+                    <div className="flex flex-col gap-1.5">
+                      {welcomeTrustItems.map((item, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <input
+                            value={item}
+                            onChange={e => {
+                              const next = [...welcomeTrustItems];
+                              next[i] = e.target.value;
+                              setWelcomeTrustItems(next);
+                            }}
+                            placeholder={`Trust-Text ${i + 1}`}
+                            className="flex-1 border rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
+                          />
+                          <button
+                            onClick={() => setWelcomeTrustItems(welcomeTrustItems.filter((_, j) => j !== i))}
+                            className="text-red-400 hover:text-red-600 text-lg leading-none px-1"
+                          >×</button>
+                        </div>
+                      ))}
+                      <button
+                        onClick={() => setWelcomeTrustItems([...welcomeTrustItems, ''])}
+                        className="flex items-center gap-1.5 text-xs text-purple-600 hover:text-purple-700 mt-0.5"
+                      >
+                        <span className="text-base">+</span> Trust-Text hinzufügen
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div>

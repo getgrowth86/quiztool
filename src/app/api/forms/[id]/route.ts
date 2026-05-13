@@ -20,6 +20,8 @@ const UpdateFormSchema = z.object({
     title: z.string(),
     description: z.string(),
     button_text: z.string(),
+    subtext: z.string().optional(),
+    trust_items: z.array(z.string()).optional(),
   }).nullable().optional(),
   thank_you_screen: z.object({
     title: z.string(),

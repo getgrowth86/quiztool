@@ -38,6 +38,8 @@ export interface WelcomeScreen {
   title: string;
   description: string;
   button_text: string;
+  subtext?: string;        // Kleiner Text unter dem Button z.B. "Aktuell werden neue Bewerber geprüft"
+  trust_items?: string[];  // Trust-Texte mit Häkchen z.B. ["100% kostenlos", "Keine Verpflichtung"]
 }
 
 export interface ThankYouScreen {

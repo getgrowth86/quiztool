@@ -98,6 +98,18 @@ export default function FormPlayerEmbed({ form }: Props) {
   const advance = useCallback(async () => {
     if (!validateCurrent()) return;
     setError('');
+
+    // Track each answer step with Meta Pixel
+    if (form.meta_pixel_id && currentQuestion) {
+      const answerValue = answers[currentQuestion.id] ?? '';
+      (window as any).fbq?.('trackCustom', 'QuizStep', {
+        step: qIndex + 1,
+        total_steps: questions.length,
+        question: currentQuestion.title,
+        answer: answerValue,
+      });
+    }
+
     if (qIndex < questions.length - 1) {
       setDirection(1);
       setQIndex(i => i + 1);
@@ -212,7 +224,27 @@ export default function FormPlayerEmbed({ form }: Props) {
                 {welcome.button_text}
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </button>
-              <p className="text-xs text-gray-500 mt-3">
+
+              {/* Subtext unter dem Button */}
+              {welcome.subtext && (
+                <p className="text-sm text-[#6B7280] mt-3">{welcome.subtext}</p>
+              )}
+
+              {/* Trust-Texte */}
+              {welcome.trust_items && welcome.trust_items.length > 0 && (
+                <ul className="mt-5 flex flex-col gap-2">
+                  {welcome.trust_items.map((item, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-[#374151]">
+                      <svg className="w-4 h-4 flex-shrink-0" style={{ color: brandColor }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <p className="text-xs text-gray-400 mt-4">
                 Drücke <kbd className="bg-gray-100 border border-gray-300 px-1 py-0.5 rounded text-xs text-gray-600">Enter ↵</kbd> zum Starten
               </p>
             </motion.div>
