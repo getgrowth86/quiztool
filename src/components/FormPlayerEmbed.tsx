@@ -197,7 +197,7 @@ export default function FormPlayerEmbed({ form }: Props) {
 
       {/* Back/forward arrows */}
       {screen === 'question' && (
-        <div className="fixed bottom-6 right-6 flex flex-col gap-2 z-40">
+        <div className="fixed bottom-3 right-3 md:bottom-6 md:right-6 flex flex-col gap-1.5 z-40">
           <button
             onClick={goBack}
             className="w-9 h-9 rounded-lg bg-white border border-[#374151] shadow-sm hover:bg-gray-50 flex items-center justify-center transition-colors text-sm text-[#111827]"
@@ -215,7 +215,7 @@ export default function FormPlayerEmbed({ form }: Props) {
         </div>
       )}
 
-      <div className="flex-1 flex items-center justify-center px-6 md:px-10 py-12">
+      <div className="flex-1 flex items-center justify-center px-4 md:px-10 py-4 md:py-10">
         <AnimatePresence mode="wait" custom={direction}>
 
           {screen === 'welcome' && (
@@ -225,32 +225,30 @@ export default function FormPlayerEmbed({ form }: Props) {
               className="max-w-xl w-full"
             >
               {form.logo_url && (
-                <img src={form.logo_url} alt="Logo" className="h-10 object-contain mb-6" />
+                <img src={form.logo_url} alt="Logo" className="h-8 object-contain mb-4" />
               )}
-              <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-5 text-[#111827]">{welcome.title}</h1>
+              <h1 className="text-2xl md:text-4xl font-bold leading-tight mb-3 text-[#111827]">{welcome.title}</h1>
               {welcome.description && (
-                <p className="text-lg text-[#6B7280] mb-8 leading-relaxed">{welcome.description}</p>
+                <p className="text-sm md:text-base text-[#6B7280] mb-4 leading-relaxed">{welcome.description}</p>
               )}
               <button
                 onClick={() => { setDirection(1); setScreen('question'); }}
-                className="group flex items-center gap-3 text-white px-7 py-3.5 rounded-lg text-base font-medium transition-colors"
+                className="group flex items-center gap-2 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors"
                 style={{ backgroundColor: brandColor }}
               >
                 {welcome.button_text}
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </button>
 
-              {/* Subtext unter dem Button */}
               {welcome.subtext && (
-                <p className="text-sm text-[#6B7280] mt-3">{welcome.subtext}</p>
+                <p className="text-xs text-[#6B7280] mt-2">{welcome.subtext}</p>
               )}
 
-              {/* Trust-Texte */}
               {welcome.trust_items && welcome.trust_items.length > 0 && (
-                <ul className="mt-5 flex flex-col gap-2">
+                <ul className="mt-3 flex flex-col gap-1.5">
                   {welcome.trust_items.map((item, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-[#374151]">
-                      <svg className="w-4 h-4 flex-shrink-0" style={{ color: brandColor }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                    <li key={i} className="flex items-center gap-2 text-xs text-[#374151]">
+                      <svg className="w-3.5 h-3.5 flex-shrink-0" style={{ color: brandColor }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                       </svg>
                       {item}
@@ -259,7 +257,7 @@ export default function FormPlayerEmbed({ form }: Props) {
                 </ul>
               )}
 
-              <p className="text-xs text-gray-400 mt-4">
+              <p className="hidden md:block text-xs text-gray-400 mt-3">
                 Drücke <kbd className="bg-gray-100 border border-gray-300 px-1 py-0.5 rounded text-xs text-gray-600">Enter ↵</kbd> zum Starten
               </p>
             </motion.div>
@@ -272,20 +270,20 @@ export default function FormPlayerEmbed({ form }: Props) {
               className="max-w-xl w-full"
             >
               {form.logo_url && (
-                <img src={form.logo_url} alt="Logo" className="h-7 object-contain mb-4" />
+                <img src={form.logo_url} alt="Logo" className="h-6 object-contain mb-3" />
               )}
-              <div className="mb-2 text-xs text-[#9CA3AF] font-medium">
+              <div className="mb-1 text-xs text-[#9CA3AF] font-medium">
                 {qIndex + 1} → {questions.length}
               </div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-2 leading-snug text-[#111827]">
+              <h2 className="text-lg md:text-2xl font-semibold mb-1 leading-snug text-[#111827]">
                 {currentQuestion.title}
                 {currentQuestion.required && <span className="text-[#DC2626] ml-1">*</span>}
               </h2>
               {currentQuestion.description && (
-                <p className="text-[#6B7280] mb-6 text-base">{currentQuestion.description}</p>
+                <p className="text-[#6B7280] mb-3 text-sm">{currentQuestion.description}</p>
               )}
 
-              <div className="mb-6">
+              <div className="mb-3">
                 {currentQuestion.type === 'short_text' && <ShortText value={answers[currentQuestion.id] ?? ''} onChange={v => setAnswer(currentQuestion.id, v)} onSubmit={advance} />}
                 {currentQuestion.type === 'long_text' && <LongText value={answers[currentQuestion.id] ?? ''} onChange={v => setAnswer(currentQuestion.id, v)} onSubmit={advance} />}
                 {currentQuestion.type === 'single_choice' && <SingleChoice value={answers[currentQuestion.id] ?? ''} onChange={v => setAnswer(currentQuestion.id, v)} onSubmit={advance} options={currentQuestion.options ?? []} />}
@@ -307,14 +305,14 @@ export default function FormPlayerEmbed({ form }: Props) {
                   <button
                     onClick={advance}
                     disabled={submitting}
-                    className="flex items-center gap-2 text-white px-5 py-2.5 rounded-lg font-medium transition-colors disabled:opacity-50 text-sm"
+                    className="flex items-center gap-1.5 text-white px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 text-sm"
                     style={{ backgroundColor: brandColor }}
                   >
                     {qIndex === questions.length - 1 ? 'Absenden' : 'OK'}
                     <span className="text-xs opacity-70">↵</span>
                   </button>
                   {currentQuestion.type !== 'long_text' && (
-                    <span className="text-xs text-gray-500">
+                    <span className="hidden md:inline text-xs text-gray-500">
                       oder <kbd className="bg-gray-100 border border-gray-300 px-1 py-0.5 rounded text-xs text-gray-600">Enter ↵</kbd>
                     </span>
                   )}
@@ -332,16 +330,16 @@ export default function FormPlayerEmbed({ form }: Props) {
               <motion.div
                 initial={{ scale: 0 }} animate={{ scale: 1 }}
                 transition={{ delay: 0.15, type: 'spring', stiffness: 200 }}
-                className="flex items-center justify-center mb-6"
+                className="flex items-center justify-center mb-4"
               >
-                <div className="w-16 h-16 rounded-full border-2 flex items-center justify-center" style={{ borderColor: brandColor }}>
-                  <svg className="w-8 h-8" style={{ color: brandColor }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <div className="w-12 h-12 rounded-full border-2 flex items-center justify-center" style={{ borderColor: brandColor }}>
+                  <svg className="w-6 h-6" style={{ color: brandColor }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
               </motion.div>
-              <h1 className="text-3xl md:text-5xl font-bold mb-4 text-[#111827]">{thankyou.title}</h1>
-              <p className="text-lg text-[#6B7280]">{thankyou.description}</p>
+              <h1 className="text-2xl md:text-4xl font-bold mb-2 text-[#111827]">{thankyou.title}</h1>
+              <p className="text-sm md:text-base text-[#6B7280]">{thankyou.description}</p>
               {thankyou.redirect_url && redirectCountdown !== null && (
                 <p className="mt-6 text-sm text-[#9CA3AF]">
                   Weiterleitung in <span className="font-semibold text-[#374151]">{redirectCountdown}</span> Sekunden…

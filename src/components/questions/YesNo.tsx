@@ -37,7 +37,7 @@ export default function YesNo({ value, onChange, onSubmit }: Props) {
           <button
             key={opt}
             onClick={() => onChange(opt)}
-            className={`flex items-center gap-3 px-8 py-5 rounded-xl border-2 transition-all duration-200 text-xl font-medium ${
+            className={`flex items-center gap-2 px-5 py-3 rounded-lg border-2 transition-all duration-200 text-sm font-medium ${
               selected
                 ? 'border-[#111827] bg-[#111827] text-white'
                 : 'border-gray-200 bg-white text-[#374151] hover:border-[#111827]'

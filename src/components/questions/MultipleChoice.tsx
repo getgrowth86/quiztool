@@ -38,20 +38,20 @@ export default function MultipleChoice({ value, onChange, options, onSubmit }: P
   }, [options, selected]);
 
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex flex-col gap-2 w-full">
       {options.map((opt, i) => {
         const isSelected = selected.includes(opt);
         return (
           <button
             key={opt}
             onClick={() => toggle(opt)}
-            className={`flex items-center gap-4 text-left px-5 py-4 rounded-xl border-2 transition-all duration-200 text-lg group ${
+            className={`flex items-center gap-3 text-left px-3 py-2.5 rounded-lg border-2 transition-all duration-200 text-sm group ${
               isSelected
                 ? 'border-[#111827] bg-gray-50 text-[#111827]'
                 : 'border-gray-200 bg-white text-[#374151] hover:border-gray-400'
             }`}
           >
-            <span className={`flex-shrink-0 w-8 h-8 rounded-md border-2 flex items-center justify-center text-sm font-bold transition-colors ${
+            <span className={`flex-shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center text-xs font-bold transition-colors ${
               isSelected
                 ? 'border-[#111827] bg-[#111827] text-white'
                 : 'border-gray-300 text-gray-500 group-hover:border-gray-400'
@@ -62,7 +62,7 @@ export default function MultipleChoice({ value, onChange, options, onSubmit }: P
           </button>
         );
       })}
-      <p className="text-sm text-gray-500 mt-2">
+      <p className="hidden md:block text-xs text-gray-500 mt-1">
         Alle zutreffenden auswählen, dann{' '}
         <kbd className="bg-gray-100 border border-gray-300 px-1.5 py-0.5 rounded text-xs text-gray-600">Enter ↵</kbd> drücken
       </p>

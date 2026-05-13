@@ -25,7 +25,7 @@ export default function Rating({ value, onChange, onSubmit }: Props) {
 
   return (
     <div className="flex flex-col items-start gap-4">
-      <div className="flex gap-3">
+      <div className="flex gap-2">
         {[1, 2, 3, 4, 5].map(star => {
           const filled = star <= (hovered || rating);
           return (
@@ -34,7 +34,7 @@ export default function Rating({ value, onChange, onSubmit }: Props) {
               onMouseEnter={() => setHovered(star)}
               onMouseLeave={() => setHovered(0)}
               onClick={() => { onChange(String(star)); setTimeout(onSubmit, 300); }}
-              className="text-5xl md:text-6xl transition-colors duration-150 focus:outline-none"
+              className="text-4xl md:text-5xl transition-colors duration-150 focus:outline-none"
               aria-label={`${star} Sterne`}
             >
               <span className={filled ? 'text-[#111827]' : 'text-[#D1D5DB]'}>★</span>
@@ -43,7 +43,7 @@ export default function Rating({ value, onChange, onSubmit }: Props) {
         })}
       </div>
       {rating > 0 && (
-        <p className="text-gray-600 text-lg">
+        <p className="text-gray-600 text-sm">
           {rating === 1 && 'Sehr schlecht'}
           {rating === 2 && 'Schlecht'}
           {rating === 3 && 'Ok'}
@@ -51,7 +51,7 @@ export default function Rating({ value, onChange, onSubmit }: Props) {
           {rating === 5 && 'Ausgezeichnet!'}
         </p>
       )}
-      <p className="text-sm text-gray-500">Drücke <kbd className="bg-gray-100 border border-gray-300 px-1.5 py-0.5 rounded text-xs text-gray-600">1–5</kbd> auf der Tastatur</p>
+      <p className="hidden md:block text-xs text-gray-500">Drücke <kbd className="bg-gray-100 border border-gray-300 px-1.5 py-0.5 rounded text-xs text-gray-600">1–5</kbd> auf der Tastatur</p>
     </div>
   );
 }
