@@ -26,6 +26,7 @@ const UpdateFormSchema = z.object({
   thank_you_screen: z.object({
     title: z.string(),
     description: z.string(),
+    redirect_url: z.string().optional(),
   }).nullable().optional(),
   questions: z.array(QuestionSchema).optional(),
   meta_pixel_id: z.string().optional().nullable(),

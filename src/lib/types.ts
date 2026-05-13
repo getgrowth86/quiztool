@@ -45,6 +45,7 @@ export interface WelcomeScreen {
 export interface ThankYouScreen {
   title: string;
   description: string;
+  redirect_url?: string;
 }
 
 export interface Response {

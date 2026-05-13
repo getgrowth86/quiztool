@@ -32,6 +32,7 @@ export default function FormPlayerEmbed({ form }: Props) {
   const [direction, setDirection] = useState(1);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [redirectCountdown, setRedirectCountdown] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const currentQuestion: Question | undefined = questions[qIndex];
@@ -65,6 +66,20 @@ export default function FormPlayerEmbed({ form }: Props) {
       (window as any).fbq?.('track', 'Lead');
     }
   }, [screen, form.meta_pixel_id]);
+
+  // Auto-redirect countdown
+  useEffect(() => {
+    const url = form.thank_you_screen?.redirect_url;
+    if (screen !== 'thankyou' || !url) return;
+    setRedirectCountdown(3);
+    const interval = setInterval(() => {
+      setRedirectCountdown(prev => {
+        if (prev === null || prev <= 1) { clearInterval(interval); window.location.href = url; return null; }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [screen, form.thank_you_screen?.redirect_url]);
 
   // postMessage height to parent for auto-resize
   useEffect(() => {
@@ -327,6 +342,12 @@ export default function FormPlayerEmbed({ form }: Props) {
               </motion.div>
               <h1 className="text-3xl md:text-5xl font-bold mb-4 text-[#111827]">{thankyou.title}</h1>
               <p className="text-lg text-[#6B7280]">{thankyou.description}</p>
+              {thankyou.redirect_url && redirectCountdown !== null && (
+                <p className="mt-6 text-sm text-[#9CA3AF]">
+                  Weiterleitung in <span className="font-semibold text-[#374151]">{redirectCountdown}</span> Sekunden…
+                  <a href={thankyou.redirect_url} className="ml-2 underline" style={{ color: brandColor }}>Jetzt weiterleiten →</a>
+                </p>
+              )}
             </motion.div>
           )}
 

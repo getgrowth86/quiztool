@@ -37,6 +37,7 @@ export default function FormBuilder({ form, onSave }: Props) {
   const [welcomeBtn, setWelcomeBtn] = useState(form?.welcome_screen?.button_text ?? 'Starten');
   const [tyTitle, setTyTitle] = useState(form?.thank_you_screen?.title ?? 'Vielen Dank!');
   const [tyDesc, setTyDesc] = useState(form?.thank_you_screen?.description ?? 'Deine Antwort wurde gespeichert.');
+  const [tyRedirectUrl, setTyRedirectUrl] = useState(form?.thank_you_screen?.redirect_url ?? '');
   const [published, setPublished] = useState(form?.published ?? false);
   const [logoUrl, setLogoUrl] = useState(form?.logo_url ?? '');
   const [brandColor, setBrandColor] = useState(form?.brand_color ?? '#111827');
@@ -123,7 +124,7 @@ export default function FormBuilder({ form, onSave }: Props) {
         subtext: welcomeSubtext || undefined,
         trust_items: welcomeTrustItems.filter(t => t.trim()).length > 0 ? welcomeTrustItems.filter(t => t.trim()) : undefined,
       } : null,
-      thank_you_screen: { title: tyTitle, description: tyDesc },
+      thank_you_screen: { title: tyTitle, description: tyDesc, redirect_url: tyRedirectUrl || undefined },
       logo_url: logoUrl || null,
       brand_color: brandColor || null,
       meta_pixel_id: metaPixelId || null,
@@ -322,6 +323,16 @@ export default function FormBuilder({ form, onSave }: Props) {
                 <div className="flex flex-col gap-2">
                   <input value={tyTitle} onChange={e => setTyTitle(e.target.value)} placeholder="Dankestitel" className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400" />
                   <textarea value={tyDesc} onChange={e => setTyDesc(e.target.value)} placeholder="Dankestext" rows={2} className="border rounded-lg px-3 py-2 text-sm w-full resize-none focus:outline-none focus:ring-2 focus:ring-gray-400" />
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">Weiterleitungs-URL</label>
+                    <input
+                      value={tyRedirectUrl}
+                      onChange={e => setTyRedirectUrl(e.target.value)}
+                      placeholder="https://example.com/danke"
+                      className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    <p className="text-xs text-gray-400 mt-1">Automatische Weiterleitung nach 3 Sekunden</p>
+                  </div>
                 </div>
               </div>
               <div>

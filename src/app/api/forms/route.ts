@@ -15,6 +15,7 @@ const CreateFormSchema = z.object({
   thank_you_screen: z.object({
     title: z.string(),
     description: z.string(),
+    redirect_url: z.string().optional(),
   }).nullable().optional(),
   meta_pixel_id: z.string().nullable().optional(),
   logo_url: z.string().nullable().optional(),

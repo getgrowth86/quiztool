@@ -42,6 +42,7 @@ export default function FormPlayer({ form }: Props) {
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [redirectCountdown, setRedirectCountdown] = useState<number | null>(null);
 
   const currentQuestion: Question | undefined = questions[qIndex];
   const brandColor = form.brand_color ?? '#111827';
@@ -65,6 +66,20 @@ export default function FormPlayer({ form }: Props) {
       (window as any).fbq?.('track', 'Lead');
     }
   }, [screen, form.meta_pixel_id]);
+
+  // Auto-redirect countdown
+  useEffect(() => {
+    const url = form.thank_you_screen?.redirect_url;
+    if (screen !== 'thankyou' || !url) return;
+    setRedirectCountdown(3);
+    const interval = setInterval(() => {
+      setRedirectCountdown(prev => {
+        if (prev === null || prev <= 1) { clearInterval(interval); window.location.href = url; return null; }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [screen, form.thank_you_screen?.redirect_url]);
 
   const setAnswer = (questionId: string, value: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: value }));
@@ -418,6 +433,12 @@ export default function FormPlayer({ form }: Props) {
               </motion.div>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 text-[#111827]">{thankyou.title}</h1>
               <p className="text-xl text-[#6B7280]">{thankyou.description}</p>
+              {thankyou.redirect_url && redirectCountdown !== null && (
+                <p className="mt-8 text-sm text-[#9CA3AF]">
+                  Weiterleitung in <span className="font-semibold text-[#374151]">{redirectCountdown}</span> Sekunden…
+                  <a href={thankyou.redirect_url} className="ml-2 underline" style={{ color: brandColor }}>Jetzt weiterleiten →</a>
+                </p>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
