@@ -353,7 +353,7 @@ export default function FormPlayerEmbed({ form }: Props) {
       </div>
 
       <div className="py-1.5 text-center text-xs text-[#D1D5DB]">
-        Bereitgestellt von <span className="text-[#D1D5DB]">Growth-Form</span>
+        <span className="text-[#C4C9D4]">© Get Growth GmbH</span>
       </div>
     </div>
   );
