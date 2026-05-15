@@ -182,7 +182,7 @@ export default function FormPlayerEmbed({ form }: Props) {
   return (
     <div
       ref={containerRef}
-      className="min-h-screen flex flex-col bg-[#F9FAFB]"
+      className="h-screen flex flex-col bg-[#F9FAFB] overflow-hidden"
     >
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 h-0.5 bg-[#E5E7EB] z-50">
@@ -215,7 +215,7 @@ export default function FormPlayerEmbed({ form }: Props) {
         </div>
       )}
 
-      <div className="flex-1 flex items-center justify-center px-4 md:px-10 py-4 md:py-10">
+      <div className="flex-1 overflow-y-auto flex items-start md:items-center justify-center px-4 md:px-10 py-4 md:py-8">
         <AnimatePresence mode="wait" custom={direction}>
 
           {screen === 'welcome' && (
@@ -225,15 +225,15 @@ export default function FormPlayerEmbed({ form }: Props) {
               className="max-w-xl w-full"
             >
               {form.logo_url && (
-                <img src={form.logo_url} alt="Logo" className="h-8 object-contain mb-4" />
+                <img src={form.logo_url} alt="Logo" className="h-7 object-contain mb-3" />
               )}
-              <h1 className="text-2xl md:text-4xl font-bold leading-tight mb-3 text-[#111827]">{welcome.title}</h1>
+              <h1 className="text-xl md:text-3xl font-bold leading-tight mb-2 text-[#111827]">{welcome.title}</h1>
               {welcome.description && (
-                <p className="text-sm md:text-base text-[#6B7280] mb-4 leading-relaxed">{welcome.description}</p>
+                <p className="text-xs md:text-sm text-[#6B7280] mb-3 leading-relaxed">{welcome.description}</p>
               )}
               <button
                 onClick={() => { setDirection(1); setScreen('question'); }}
-                className="group flex items-center gap-2 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors"
+                className="group flex items-center gap-2 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                 style={{ backgroundColor: brandColor }}
               >
                 {welcome.button_text}
@@ -270,20 +270,20 @@ export default function FormPlayerEmbed({ form }: Props) {
               className="max-w-xl w-full"
             >
               {form.logo_url && (
-                <img src={form.logo_url} alt="Logo" className="h-6 object-contain mb-3" />
+                <img src={form.logo_url} alt="Logo" className="h-5 object-contain mb-2" />
               )}
               <div className="mb-1 text-xs text-[#9CA3AF] font-medium">
                 {qIndex + 1} → {questions.length}
               </div>
-              <h2 className="text-lg md:text-2xl font-semibold mb-1 leading-snug text-[#111827]">
+              <h2 className="text-base md:text-xl font-semibold mb-1 leading-snug text-[#111827]">
                 {currentQuestion.title}
                 {currentQuestion.required && <span className="text-[#DC2626] ml-1">*</span>}
               </h2>
               {currentQuestion.description && (
-                <p className="text-[#6B7280] mb-3 text-sm">{currentQuestion.description}</p>
+                <p className="text-[#6B7280] mb-2 text-xs">{currentQuestion.description}</p>
               )}
 
-              <div className="mb-3">
+              <div className="mb-2">
                 {currentQuestion.type === 'short_text' && <ShortText value={answers[currentQuestion.id] ?? ''} onChange={v => setAnswer(currentQuestion.id, v)} onSubmit={advance} />}
                 {currentQuestion.type === 'long_text' && <LongText value={answers[currentQuestion.id] ?? ''} onChange={v => setAnswer(currentQuestion.id, v)} onSubmit={advance} />}
                 {currentQuestion.type === 'single_choice' && <SingleChoice value={answers[currentQuestion.id] ?? ''} onChange={v => setAnswer(currentQuestion.id, v)} onSubmit={advance} options={currentQuestion.options ?? []} />}
@@ -352,7 +352,7 @@ export default function FormPlayerEmbed({ form }: Props) {
         </AnimatePresence>
       </div>
 
-      <div className="py-3 text-center text-xs text-[#D1D5DB]">
+      <div className="py-1.5 text-center text-xs text-[#D1D5DB]">
         Bereitgestellt von <span className="text-[#D1D5DB]">Growth-Form</span>
       </div>
     </div>

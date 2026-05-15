@@ -25,7 +25,7 @@ export default function Rating({ value, onChange, onSubmit }: Props) {
 
   return (
     <div className="flex flex-col items-start gap-4">
-      <div className="flex gap-2">
+      <div className="flex gap-1.5">
         {[1, 2, 3, 4, 5].map(star => {
           const filled = star <= (hovered || rating);
           return (
@@ -34,7 +34,7 @@ export default function Rating({ value, onChange, onSubmit }: Props) {
               onMouseEnter={() => setHovered(star)}
               onMouseLeave={() => setHovered(0)}
               onClick={() => { onChange(String(star)); setTimeout(onSubmit, 300); }}
-              className="text-4xl md:text-5xl transition-colors duration-150 focus:outline-none"
+              className="text-3xl md:text-4xl transition-colors duration-150 focus:outline-none"
               aria-label={`${star} Sterne`}
             >
               <span className={filled ? 'text-[#111827]' : 'text-[#D1D5DB]'}>★</span>
