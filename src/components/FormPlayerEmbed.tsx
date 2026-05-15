@@ -182,7 +182,7 @@ export default function FormPlayerEmbed({ form }: Props) {
   return (
     <div
       ref={containerRef}
-      className="h-screen flex flex-col bg-[#F9FAFB] overflow-hidden"
+      className="flex flex-col bg-[#F9FAFB]"
     >
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 h-0.5 bg-[#E5E7EB] z-50">
@@ -215,7 +215,7 @@ export default function FormPlayerEmbed({ form }: Props) {
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto flex items-start md:items-center justify-center px-4 md:px-10 py-4 md:py-8">
+      <div className="flex-1 flex items-start justify-center px-4 md:px-10 pt-3 pb-2">
         <AnimatePresence mode="wait" custom={direction}>
 
           {screen === 'welcome' && (
