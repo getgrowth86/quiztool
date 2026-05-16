@@ -42,6 +42,10 @@ export default function FormBuilder({ form, onSave }: Props) {
   const [logoUrl, setLogoUrl] = useState(form?.logo_url ?? '');
   const [brandColor, setBrandColor] = useState(form?.brand_color ?? '#111827');
   const [metaPixelId, setMetaPixelId] = useState(form?.meta_pixel_id ?? '');
+  const [closeApiKey, setCloseApiKey] = useState(form?.close_api_key ?? '');
+  const [closeNameQId, setCloseNameQId] = useState(form?.close_field_mapping?.name_question_id ?? '');
+  const [closeEmailQId, setCloseEmailQId] = useState(form?.close_field_mapping?.email_question_id ?? '');
+  const [closePhoneQId, setClosePhoneQId] = useState(form?.close_field_mapping?.phone_question_id ?? '');
   const [welcomeEnabled, setWelcomeEnabled] = useState(Boolean(form?.welcome_screen));
   const [welcomeSubtext, setWelcomeSubtext] = useState(form?.welcome_screen?.subtext ?? '');
   const [welcomeTrustItems, setWelcomeTrustItems] = useState<string[]>(form?.welcome_screen?.trust_items ?? []);
@@ -128,6 +132,12 @@ export default function FormBuilder({ form, onSave }: Props) {
       logo_url: logoUrl || null,
       brand_color: brandColor || null,
       meta_pixel_id: metaPixelId || null,
+      close_api_key: closeApiKey || null,
+      close_field_mapping: closeApiKey ? {
+        name_question_id: closeNameQId || undefined,
+        email_question_id: closeEmailQId || undefined,
+        phone_question_id: closePhoneQId || undefined,
+      } : null,
       questions: questions.map((q, i) => ({
         id: q.id,
         type: q.type,
@@ -375,6 +385,48 @@ export default function FormBuilder({ form, onSave }: Props) {
                     />
                     <p className="text-xs text-gray-400 mt-1">Deine Facebook/Meta Pixel ID für Conversion-Tracking</p>
                   </div>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Close CRM</h3>
+                <div className="flex flex-col gap-3">
+                  <div>
+                    <label className="text-xs text-gray-600 mb-1 block font-medium">API Key</label>
+                    <input
+                      value={closeApiKey}
+                      onChange={e => setCloseApiKey(e.target.value)}
+                      placeholder="api_xxxxxxxxxxxxxxxxxxxx"
+                      type="password"
+                      className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400 font-mono"
+                    />
+                    <p className="text-xs text-gray-400 mt-1">Close → Einstellungen → API Keys</p>
+                  </div>
+                  {closeApiKey && (
+                    <>
+                      <div>
+                        <label className="text-xs text-gray-600 mb-1 block font-medium">Name-Frage</label>
+                        <select value={closeNameQId} onChange={e => setCloseNameQId(e.target.value)} className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white">
+                          <option value="">— nicht zugeordnet —</option>
+                          {questions.map(q => <option key={q.tempId} value={q.id ?? q.tempId}>{q.title}</option>)}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-600 mb-1 block font-medium">E-Mail-Frage</label>
+                        <select value={closeEmailQId} onChange={e => setCloseEmailQId(e.target.value)} className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white">
+                          <option value="">— nicht zugeordnet —</option>
+                          {questions.map(q => <option key={q.tempId} value={q.id ?? q.tempId}>{q.title}</option>)}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-600 mb-1 block font-medium">Telefon-Frage</label>
+                        <select value={closePhoneQId} onChange={e => setClosePhoneQId(e.target.value)} className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white">
+                          <option value="">— nicht zugeordnet —</option>
+                          {questions.map(q => <option key={q.tempId} value={q.id ?? q.tempId}>{q.title}</option>)}
+                        </select>
+                      </div>
+                      <p className="text-xs text-gray-400">Alle Antworten werden zusätzlich als Notiz am Lead gespeichert.</p>
+                    </>
+                  )}
                 </div>
               </div>
               {form && (

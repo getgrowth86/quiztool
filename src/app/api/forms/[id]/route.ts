@@ -32,6 +32,12 @@ const UpdateFormSchema = z.object({
   meta_pixel_id: z.string().optional().nullable(),
   logo_url: z.string().optional().nullable(),
   brand_color: z.string().optional().nullable(),
+  close_api_key: z.string().optional().nullable(),
+  close_field_mapping: z.object({
+    name_question_id: z.string().optional(),
+    email_question_id: z.string().optional(),
+    phone_question_id: z.string().optional(),
+  }).optional().nullable(),
 });
 
 type Params = { params: Promise<{ id: string }> };

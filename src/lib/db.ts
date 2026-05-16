@@ -58,6 +58,8 @@ async function ensureInit() {
   await sql`ALTER TABLE forms ADD COLUMN IF NOT EXISTS meta_pixel_id TEXT`;
   await sql`ALTER TABLE forms ADD COLUMN IF NOT EXISTS logo_url TEXT`;
   await sql`ALTER TABLE forms ADD COLUMN IF NOT EXISTS brand_color TEXT`;
+  await sql`ALTER TABLE forms ADD COLUMN IF NOT EXISTS close_api_key TEXT`;
+  await sql`ALTER TABLE forms ADD COLUMN IF NOT EXISTS close_field_mapping TEXT`;
 
   // Seed example form if none exists
   const { rows } = await sql`SELECT COUNT(*) AS c FROM forms`;
@@ -128,12 +130,14 @@ export async function createForm(data: {
   meta_pixel_id?: string | null;
   logo_url?: string | null;
   brand_color?: string | null;
+  close_api_key?: string | null;
+  close_field_mapping?: object | null;
 }): Promise<Form> {
   await ensureInit();
   const now = new Date().toISOString();
   const id = generateId();
   await sql`
-    INSERT INTO forms (id, title, description, welcome_screen, thank_you_screen, published, created_at, updated_at, meta_pixel_id, logo_url, brand_color)
+    INSERT INTO forms (id, title, description, welcome_screen, thank_you_screen, published, created_at, updated_at, meta_pixel_id, logo_url, brand_color, close_api_key, close_field_mapping)
     VALUES (
       ${id},
       ${data.title},
@@ -145,7 +149,9 @@ export async function createForm(data: {
       ${now},
       ${data.meta_pixel_id ?? null},
       ${data.logo_url ?? null},
-      ${data.brand_color ?? null}
+      ${data.brand_color ?? null},
+      ${data.close_api_key ?? null},
+      ${data.close_field_mapping ? JSON.stringify(data.close_field_mapping) : null}
     )
   `;
   return (await getForm(id))!;
@@ -160,6 +166,8 @@ export async function updateForm(id: string, data: {
   meta_pixel_id?: string | null;
   logo_url?: string | null;
   brand_color?: string | null;
+  close_api_key?: string | null;
+  close_field_mapping?: object | null;
   questions?: Array<{
     id?: string | null;
     type: string;
@@ -183,6 +191,8 @@ export async function updateForm(id: string, data: {
   if (data.meta_pixel_id !== undefined) await sql`UPDATE forms SET meta_pixel_id = ${data.meta_pixel_id ?? null}, updated_at = ${now} WHERE id = ${id}`;
   if (data.logo_url !== undefined) await sql`UPDATE forms SET logo_url = ${data.logo_url ?? null}, updated_at = ${now} WHERE id = ${id}`;
   if (data.brand_color !== undefined) await sql`UPDATE forms SET brand_color = ${data.brand_color ?? null}, updated_at = ${now} WHERE id = ${id}`;
+  if (data.close_api_key !== undefined) await sql`UPDATE forms SET close_api_key = ${data.close_api_key ?? null}, updated_at = ${now} WHERE id = ${id}`;
+  if (data.close_field_mapping !== undefined) await sql`UPDATE forms SET close_field_mapping = ${data.close_field_mapping ? JSON.stringify(data.close_field_mapping) : null}, updated_at = ${now} WHERE id = ${id}`;
 
   // Always bump updated_at
   await sql`UPDATE forms SET updated_at = ${now} WHERE id = ${id}`;
@@ -266,6 +276,7 @@ function parseForm(row: Record<string, unknown>): Form {
     published: Boolean(row.published),
     welcome_screen: row.welcome_screen ? JSON.parse(row.welcome_screen as string) : null,
     thank_you_screen: row.thank_you_screen ? JSON.parse(row.thank_you_screen as string) : null,
+    close_field_mapping: row.close_field_mapping ? JSON.parse(row.close_field_mapping as string) : null,
   } as Form;
 }
 

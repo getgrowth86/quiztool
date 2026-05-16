@@ -19,6 +19,12 @@ export interface Question {
   options: string[] | null; // for multiple_choice / single_choice
 }
 
+export interface CloseFieldMapping {
+  name_question_id?: string;
+  email_question_id?: string;
+  phone_question_id?: string;
+}
+
 export interface Form {
   id: string;
   title: string;
@@ -32,6 +38,8 @@ export interface Form {
   meta_pixel_id?: string | null;
   logo_url?: string | null;
   brand_color?: string | null;
+  close_api_key?: string | null;
+  close_field_mapping?: CloseFieldMapping | null;
 }
 
 export interface WelcomeScreen {
