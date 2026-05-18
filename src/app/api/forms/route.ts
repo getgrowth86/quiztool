@@ -20,6 +20,7 @@ const CreateFormSchema = z.object({
   meta_pixel_id: z.string().nullable().optional(),
   logo_url: z.string().nullable().optional(),
   brand_color: z.string().nullable().optional(),
+  google_sheet_webhook_url: z.string().nullable().optional(),
   close_api_key: z.string().nullable().optional(),
   close_field_mapping: z.object({
     name_question_id: z.string().optional(),

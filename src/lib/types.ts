@@ -40,6 +40,7 @@ export interface Form {
   brand_color?: string | null;
   close_api_key?: string | null;
   close_field_mapping?: CloseFieldMapping | null;
+  google_sheet_webhook_url?: string | null;
 }
 
 export interface WelcomeScreen {

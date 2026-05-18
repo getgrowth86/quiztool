@@ -42,6 +42,8 @@ export default function FormBuilder({ form, onSave }: Props) {
   const [logoUrl, setLogoUrl] = useState(form?.logo_url ?? '');
   const [brandColor, setBrandColor] = useState(form?.brand_color ?? '#111827');
   const [metaPixelId, setMetaPixelId] = useState(form?.meta_pixel_id ?? '');
+  const [googleSheetWebhookUrl, setGoogleSheetWebhookUrl] = useState(form?.google_sheet_webhook_url ?? '');
+  const [showSheetInstructions, setShowSheetInstructions] = useState(false);
   const [closeApiKey, setCloseApiKey] = useState(form?.close_api_key ?? '');
   const [closeNameQId, setCloseNameQId] = useState(form?.close_field_mapping?.name_question_id ?? '');
   const [closeEmailQId, setCloseEmailQId] = useState(form?.close_field_mapping?.email_question_id ?? '');
@@ -132,6 +134,7 @@ export default function FormBuilder({ form, onSave }: Props) {
       logo_url: logoUrl || null,
       brand_color: brandColor || null,
       meta_pixel_id: metaPixelId || null,
+      google_sheet_webhook_url: googleSheetWebhookUrl || null,
       close_api_key: closeApiKey || null,
       close_field_mapping: closeApiKey ? {
         name_question_id: closeNameQId || undefined,
@@ -385,6 +388,50 @@ export default function FormBuilder({ form, onSave }: Props) {
                     />
                     <p className="text-xs text-gray-400 mt-1">Deine Facebook/Meta Pixel ID für Conversion-Tracking</p>
                   </div>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Google Sheets</h3>
+                <div className="flex flex-col gap-2">
+                  <div>
+                    <label className="text-xs text-gray-600 mb-1 block font-medium">Webhook-URL</label>
+                    <input
+                      value={googleSheetWebhookUrl}
+                      onChange={e => setGoogleSheetWebhookUrl(e.target.value)}
+                      placeholder="https://script.google.com/macros/s/..."
+                      className="border rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowSheetInstructions(v => !v)}
+                    className="text-xs text-purple-600 hover:text-purple-700 text-left"
+                  >
+                    {showSheetInstructions ? '▲ Einrichtung ausblenden' : '▼ Wie richte ich das ein?'}
+                  </button>
+                  {showSheetInstructions && (
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-xs text-gray-600 flex flex-col gap-2">
+                      <p className="font-semibold text-gray-700">Einrichtung in 3 Schritten:</p>
+                      <ol className="list-decimal list-inside flex flex-col gap-1.5 leading-relaxed">
+                        <li>Öffne dein Google Sheet → <strong>Erweiterungen → Apps Script</strong></li>
+                        <li>Ersetze den Inhalt mit folgendem Code und klicke <strong>Speichern</strong>:</li>
+                      </ol>
+                      <pre className="bg-white border border-gray-200 rounded p-2 text-xs overflow-x-auto whitespace-pre-wrap break-all">{`function doPost(e) {
+  var data = JSON.parse(e.postData.contents);
+  var sheet = SpreadsheetApp.getActiveSheet();
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(data.headers);
+  }
+  sheet.appendRow(data.values);
+  return ContentService
+    .createTextOutput(JSON.stringify({status:'ok'}))
+    .setMimeType(ContentService.MimeType.JSON);
+}`}</pre>
+                      <ol className="list-decimal list-inside flex flex-col gap-1.5 leading-relaxed" start={3}>
+                        <li>Klicke <strong>Bereitstellen → Neue Bereitstellung</strong> → Typ: <strong>Web-App</strong> → Zugriff: <strong>Jeder</strong> → URL kopieren und oben einfügen</li>
+                      </ol>
+                    </div>
+                  )}
                 </div>
               </div>
               <div>

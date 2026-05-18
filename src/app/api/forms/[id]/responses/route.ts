@@ -3,6 +3,24 @@ import { getForm, createResponse, listResponses } from '@/lib/db';
 import { z } from 'zod';
 import { Form } from '@/lib/types';
 
+async function pushToGoogleSheet(form: Form, answers: { question_id: string; value: string }[]) {
+  if (!form.google_sheet_webhook_url) return;
+  const questions = form.questions ?? [];
+
+  // Build header row and value row
+  const headers = ['Zeitstempel', ...questions.map(q => q.title)];
+  const values = [
+    new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' }),
+    ...questions.map(q => answers.find(a => a.question_id === q.id)?.value ?? ''),
+  ];
+
+  await fetch(form.google_sheet_webhook_url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ headers, values }),
+  });
+}
+
 async function pushToClose(form: Form, answers: { question_id: string; value: string }[]) {
   if (!form.close_api_key) return;
   const mapping = form.close_field_mapping ?? {};
@@ -97,6 +115,13 @@ export async function POST(req: NextRequest, { params }: Params) {
     }
 
     const response = await createResponse(id, parsed.data.answers);
+
+    // Push to Google Sheets in background (non-blocking)
+    if (form.google_sheet_webhook_url) {
+      pushToGoogleSheet(form, parsed.data.answers).catch(err =>
+        console.error('Google Sheets push error:', err)
+      );
+    }
 
     // Push to Close CRM in background (non-blocking)
     if (form.close_api_key) {
